@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
-@section('content')
 
+
+@section('content')
 <div class="container shadow p-3 mb-5 bg-white rounded ">
 
     <h4 class="text-center">RECEIPT</h4>
