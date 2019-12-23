@@ -230,13 +230,22 @@ else
     var row = '<tr><td>' +index + '</td>'
     row += '<td>' + item['name'] +'</td>';
     row += '<td>' + item['status'] +'</td>';
-    row += '<td>' + 'view' +'</td></tr>';
+    // row += '<td>' + item['checkup_id'] +'</td>';
+    // row += '<td>' + item['receipt_id'] +'</td>';
+
+    //Checkup id and receipt id send
+    row += '<td><a target="_blank" href ="checkups/' +
+             item['receipt_id'] + 
+             '/' + 
+             item['checkup_id'] + 
+             '"> view </a></td></tr>';
     checkup_table += row;
   });
   '</tbody></table>';
 }
+
 if (notes == undefined || notes.length == 0)
-notes_table = '<div class="alert alert-success" role="alert">No Notes</div>'; 
+  notes_table = '<div class="alert alert-success" role="alert">No Notes</div>'; 
 else{
   var notes_table = '<h5>Notes</h5>';
 notes.forEach(function(item,index,array){

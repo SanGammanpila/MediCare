@@ -16,6 +16,10 @@
     padding: 15px;
     margin: 0 auto;
 }
+
+.jumbotron{
+  height: 100%;
+}
 </style>
 
 @section('content')

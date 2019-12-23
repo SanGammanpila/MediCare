@@ -28,6 +28,7 @@ class ReceiptController extends Controller
                 
                 //Update Database
                 $aff = DB::update('UPDATE receipt_checkups SET file_path =:path WHERE receipt_id = :rid AND checkup_id = :cid', ['path'=>$file_path,'rid' =>$request->receipt_id,'cid' =>$request->checkup_id[$i]]);
+                DB::update('UPDATE receipt_checkups SET status = "done" WHERE receipt_id = :rid AND checkup_id = :cid', ['rid' =>$request->receipt_id,'cid' =>$request->checkup_id[$i]]);
                 //Store the Files
                 $file->storeAs('checkups/'.$request->patient_id.'/',$fileName);
                 $i += 1;
@@ -152,6 +153,20 @@ class ReceiptController extends Controller
 
         return redirect('/home') -> with('success', 'Receipt submitted');       
         return response()->json(['success' => 'Succesfull']);
+    }
+
+    public function viewCheckup(Request $request,$rid,$cid)
+    {
+        //send the relavent file
+        $path = DB::select('SELECT file_path FROM receipt_checkups WHERE receipt_id = :rid AND checkup_id = :cid',['rid'=>$rid,'cid'=>$cid]);
+        $path1 = $path[0]->file_path;
+
+        $pathToFile = storage_path()."\app\checkups\\".$path1;
+        
+        //return $pathToFile;
+
+        return response()->file($pathToFile);
+       // return $rid.' '.$cid;   
     }
 
     /**

@@ -112,8 +112,8 @@
                 'receipt_id':"{{$receipt->id}}"
         },
         success: function(data){
-          //Remove Button or Change To 
-          //Grey out the area
+          //TODO Remove Button or Change To 
+          //TODO Grey out the area
           $("#medicines").addClass("bg-secondary");
           $("#btnmedIssued").addClass("disabled");
           console.log(data);

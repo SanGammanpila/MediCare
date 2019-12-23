@@ -43,6 +43,6 @@ Route::post('ajax/med_suggest', 'ReceiptController@med_suggest');
 Route::post('ajax/get_med_id', 'ReceiptController@get_med_id');
 Route::post('receipts/medIssued', 'ReceiptController@medIssued');
 
-Route::get('/test', 'HomeController@test');
+Route::get('patient/checkups/{rid}/{cid}', 'ReceiptController@viewCheckup');
 
 //Tech
