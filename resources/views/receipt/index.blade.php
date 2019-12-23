@@ -30,7 +30,7 @@
 
       
       <div>
-        <input id="new_medicine" onkeyup="suggestionsUpdate()" type="text" placeholder="Medicine list" list="medicine_hints">
+        <input id="new_medicine" onkeyup="suggestionsUpdate()" type="text" placeholder="Medicine" list="medicine_hints">
         <datalist id="medicine_hints">
         </datalist>
 
