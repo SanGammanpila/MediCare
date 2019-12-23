@@ -1,9 +1,9 @@
+{{-- Patient Controller --}}
+
+
 @extends('layouts.app')
-
-
-
 @section('content')
-<div class="container shadow p-3 mb-5 bg-white rounded ">
+<div class="container">
 
     <h4 class="text-center">RECEIPT</h4>
     
@@ -28,38 +28,43 @@
         </tbody>
 </table>
 
+</div>
 @if ($receipt->checkMedicines)
     Medicines All done
 @endif
-
 <div>
-<div id="medicines">
 
-  <h2>Medicines</h2>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-          <th scope="col">#</th>
-          <th scope="col">Medicine</th>
-          <th scope="col">Dosage</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($meds as $med)
+
+    <div class="container  shadow p-3 mb-5 bg-white rounded " id="medicines">
+
+      <h2>Medicines</h2>
+      <table class="table table-striped">
+        <thead>
           <tr>
-              <td>{{($loop->index)+1}}</td>
-              <td>{{$med->medicine_id}}</td>
-              <td>{{$med->dose}}</td>
-          </tr>
-        @endforeach
-    </tbody>
-  </table>
+              <th scope="col">#</th>
+              <th scope="col">Medicine</th>
+              <th scope="col">Dosage</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($meds as $med)
+              <tr>
+                  <td>{{($loop->index)+1}}</td>
+                  <td>{{$med->medicine_id}}</td>
+                  <td>{{$med->dose}}</td>
+              </tr>
+            @endforeach
+        </tbody>
+      </table>
 
-  <button id="btnmedIssued" onclick="medIssued()" class="btn btn-danger">Okay</button>
-</div>
+      <button id="btnmedIssued" onclick="medIssued()" class="btn btn-danger">Okay</button>
+    </div>
+
+
+    <div class="container shadow p-3 mb-5 bg-white rounded  ">
 
 <h2>Checkups</h2>
-{!!Form::open(['action'=>'ReceiptController@checkupsDone', 'method'=>'POST'])!!}
+{!!Form::open(['action'=>'ReceiptController@checkupsDone', 'method'=>'POST', 'enctype'=>'multipart/form-data'])!!}
 <table class="table table-striped">
     <thead>
       <tr>
@@ -75,18 +80,21 @@
               <td>{{($loop->index)+1}}</td>
               <td>{{$cu->name}}</td>
               <td>{{$cu->status}}</td>
-              <td><input type="file" name="checkup_files{{$cu->id}}[]" id=""></td>
+              <td><input type="file" name="checkup_files[]" multiple id=""></td>
+              <input type="hidden" value="{{$cu->name}}" name="checkup_type[]">
+              <input type="hidden" value="{{$cu->checkup_id}}" name="checkup_id[]">
+             
               {{-- <td><button type="button" class="btn btn-link">Upload</button></td> --}}
               <td></td>
           </tr>
         @endforeach
       </tbody>
     </table>
-
+    <input type="hidden" value="{{$patient_data->id}}" name="patient_id">
     <input value="{{$receipt->id}}" type="hidden" name="receipt_id">
-    <input type="submit" class="btn btn-success float-right" value="Done">
+    <input type="submit" class="btn btn-success" value="Done">
     {!!Form::close()!!}
-  
+  </div> 
 <p>op.blade.php</p>
 </div>
 </div>

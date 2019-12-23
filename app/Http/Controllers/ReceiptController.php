@@ -16,24 +16,27 @@ class ReceiptController extends Controller
 
     public function checkupsDone(Request $request)
     {
-        //Save files sent - create folder for each patient
-        //Update receipts table
-        //Update checkups table
+            
+        $files = $request->file('checkup_files');
 
-        $checkup_ids = (DB::table('medical_checkups')->get())->id;
+        if ($request->hasFile('checkup_files')) {
+            $i = 0;
+            foreach ($files as $file) {
+                $extension = $file->getClientOriginalExtension();
+                $fileName = $request->patient_id."_".$request->receipt_id.$request->checkup_type[$i].'_'.date("dmy").'.'.$extension;
+                $file_path = $request->patient_id.'/'.$fileName ;
+                
+                //Update Database
+                $aff = DB::update('UPDATE receipt_checkups SET file_path =:path WHERE receipt_id = :rid AND checkup_id = :cid', ['path'=>$file_path,'rid' =>$request->receipt_id,'cid' =>$request->checkup_id[$i]]);
+                //Store the Files
+                $file->storeAs('checkups/'.$request->patient_id.'/',$fileName);
+                $i += 1;
+            }
 
-        foreach ($checkup_ids as $checkup) {
-           if ($request->input()->has) {
-               # code...
-           } $request->checkup_files.$checkup;
+            // ! Redirect
+            return 'Files stored '.$aff;
         }
-
-        $request->checkup_files;
-
-        DB::table('receipts')
-            ->where('id', $request->receipt_id)
-            ->update(['checkMedicines' => 1]);   
-        return 'done';
+        return 'No files';
     }
 
     public function medIssued(Request $request)

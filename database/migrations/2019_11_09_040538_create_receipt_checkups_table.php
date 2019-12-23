@@ -17,6 +17,7 @@ class CreateReceiptCheckupsTable extends Migration
             $table->bigInteger('receipt_id');
             $table->bigInteger('checkup_id');
             $table->enum('status',array('done','pending','NA'))->default('pending');
+            $table->string('file_path');
             $table->primary(array('receipt_id','checkup_id'));
         });
     }
